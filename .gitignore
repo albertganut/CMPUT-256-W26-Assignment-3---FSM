@@ -1,0 +1,25 @@
+# OS/editor junk
+.DS_Store
+.vs/
+.vscode/
+.idea/
+
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Unity cache
+**/[Cc]ache/
+**/[Gg]i[Cc]ache/
+
+# IDE/project files (regenerate as needed)
+*.csproj
+*.sln
+
+# Optional: crash logs
+*.log
