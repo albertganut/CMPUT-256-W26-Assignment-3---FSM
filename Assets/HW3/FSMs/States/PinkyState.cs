@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// this overrides three functions: EnterState, ExitState, and Update from the base State class
 public class PinkyState : State
 {
 
@@ -16,7 +17,7 @@ public class PinkyState : State
     {
         base.ExitState(agent);
     }
-     
+
     public override State Update(FSMAgent agent)
     {
         //Handle Following Pacman
@@ -26,10 +27,10 @@ public class PinkyState : State
             ScoreHandler.Instance.KillPacman();
         }
 
-        //If timer complete, go to Scatter State
+        //If timer complete, go to Scatter  State
         if (agent.TimerComplete())
         {
-            return new ScatterState(new Vector3(ObstacleHandler.Instance.XBound, ObstacleHandler.Instance.YBound), this);
+            return new ScatterState(new Vector3(-1 * ObstacleHandler.Instance.XBound, ObstacleHandler.Instance.YBound), this);
         }
 
         //If Pacman ate a power pellet, go to Frightened State

@@ -12,7 +12,7 @@ public class Pinky : FSMAgent
 
     public override void Initialize()
     {
-        currState = new PinkyState();
+        currState = new PinkyState(); // instructions say that he doesn't give this, but he does 
         currState.EnterState(this);
     }
 }
