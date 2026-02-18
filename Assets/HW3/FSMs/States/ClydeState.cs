@@ -5,11 +5,14 @@ using UnityEngine;
 public class ClydeState : State
 {
 
+    private Vector3 scatterPos;
+
     public ClydeState() : base("Clyde") { }
 
     public override void EnterState(FSMAgent agent)
     {
         agent.SetTimer(20f);
+        scatterPos = new Vector3(-1 * ObstacleHandler.Instance.XBound, -1 * ObstacleHandler.Instance.YBound);
     }
 
     public override void ExitState(FSMAgent agent)
@@ -18,9 +21,11 @@ public class ClydeState : State
     }
 
     public override State Update(FSMAgent agent)
+
     {
         //Handle Following Pacman
         Vector3 pacmanLocation = PacmanInfo.Instance.transform.position;
+
         if (agent.CloseEnough(pacmanLocation))
         {
             ScoreHandler.Instance.KillPacman();
@@ -29,7 +34,7 @@ public class ClydeState : State
         //If timer complete, go to Scatter  State
         if (agent.TimerComplete())
         {
-            return new ScatterState(new Vector3(-1 * ObstacleHandler.Instance.XBound, ObstacleHandler.Instance.YBound), this);
+            return new ScatterState(scatterPos, this);
         }
 
         //If Pacman ate a power pellet, go to Frightened State
@@ -37,8 +42,15 @@ public class ClydeState : State
         {
             return new FrightenedState(this);
         }
-        //If we didn't return follow Pacman
-        agent.SetTarget(pacmanLocation); // change this so that the setTarget is targetting the correct position based on the logic
+
+        if (Vector3.Distance(agent.GetPosition(), pacmanLocation) <= 1.6f) // 0.2 x 8 grid cells = 1.6f 
+        {
+            agent.SetTarget(scatterPos);
+        }
+        else
+        {
+            agent.SetTarget(pacmanLocation);
+        }
 
         //Stay in this state
         return this;
