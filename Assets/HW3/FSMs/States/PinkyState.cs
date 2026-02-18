@@ -39,7 +39,8 @@ public class PinkyState : State
             return new FrightenedState(this);
         }
         //If we didn't return follow Pacman
-        agent.SetTarget(pacmanLocation);
+        // Each grid cell is 0.2. Thus, 4  grid cells in front of pacman is -> 0.2 x 4 = 0.8f
+        agent.SetTarget(pacmanLocation + PacmanInfo.Instance.Facing * 0.8f);
 
         //Stay in this state
         return this;
